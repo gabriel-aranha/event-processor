@@ -1,4 +1,7 @@
 from flask import Flask
+import event_processor
+import time
+import os
 app = Flask(__name__)
 
 
@@ -8,4 +11,6 @@ def health_check():
 
 
 if __name__ == "__main__":
-    app.run()
+    time.sleep(10)
+    event_processor.init_event_consuming()
+    app.run(port=os.getenv('PORT'))

@@ -37,7 +37,7 @@ def validate_message(message):
     if 'error' in base_result:
         if message_id != '':
             save_key_to_redis(message_id, json_message)
-            send_message('validation-error', base_result)
+            send_message('validation-error', {'id': message_id,'error': base_result['error']})
         else:
             return
 
@@ -55,7 +55,7 @@ def validate_message(message):
 
     if 'error' in payload_result:
         save_key_to_redis(message_id, json_message)
-        send_message('validation-error', payload_result)
+        send_message('validation-error', {'id': message_id,'error': payload_result['error']})
 
     else:
         save_key_to_redis(message_id, json_message)

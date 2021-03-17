@@ -39,6 +39,7 @@ def validate_message(message):
             save_key_to_redis(message_id, json_message)
             send_message('validation-error',
                          {'id': message_id, 'error': base_result['error']})
+            return
         else:
             return
 

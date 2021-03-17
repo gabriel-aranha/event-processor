@@ -1,1 +1,29 @@
-# event-processor
+# RabbitMQ Event Processor
+Project written in Python to consume RabbitMQ messages, validate them, and persist in a Redis instance.
+# Overview
+1. The code consumes mock messages from the RabbitMQ events queue produced by the project in the following repository: https://github.com/gabriel-aranha/event-producer  
+2. The messages consumed are then validated according to its JSON schema and necessary values types, depending on the event-type key.
+3. If a validation is successful, the message is persisted on Redis and the message ID is sent to a new RabbitMQ queue named validation-success for further processing.
+4. If a validation is not successful, the message is persisted on Redis and the message ID along with the validation error is sent to a new RabbitMQ queue named validation-error for further processing.
+# Quickstart with Docker Compose
+## Setup
+1. Clone this repository:
+    ```
+    $ git clone git@github.com:gabriel-aranha/event-processor.git
+    ```
+2. Enter the folder:
+    ```
+    $ cd event-processor
+    ```
+3. Send the docker compose command:
+    ```
+    $ docker-compose up --build
+4. Wait for the event-processor, Redis, and RabbitMQ to startup.  
+4.1 RabbitMQ Management can be accessed on the following address and credentials:  
+    ```
+    http://localhost:15672
+
+    Username: guest
+    Password: guest
+    ```  
+    4.2 Redis can be accessed on Port 6379.

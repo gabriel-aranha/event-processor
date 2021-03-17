@@ -26,9 +26,9 @@ def get_schema_transaction():
         'type': 'object',
         'properties': {
             'credit_limit': {'type': 'number'},
-            'processor': {'type': 'string'},
+            'amount': {'type': 'number'},
         },
-        'required': ['credit_limit', 'processor']
+        'required': ['credit_limit', 'amount']
     }
 
     return schema
@@ -39,9 +39,9 @@ def get_schema_issue_credit_card():
         'type': 'object',
         'properties': {
             'credit_limit': {'type': 'number'},
-            'amount': {'type': 'number'},
+            'processor': {'type': 'string'},
         },
-        'required': ['credit_limit', 'amount']
+        'required': ['credit_limit', 'processor']
     }
 
     return schema

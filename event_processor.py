@@ -21,6 +21,7 @@ def init_event_consuming():
 
 
 def message_handler(ch, method, properties, body):
+    print('received message')
     validate_message(body)
 
 
@@ -69,6 +70,7 @@ def save_key_to_redis(key, payload):
 
 
 def send_message(queue, message):
+    print('init send message')
     url = os.getenv('RABBITMQ_CONN')
     params = pika.URLParameters(url)
     connection = pika.BlockingConnection(params)
@@ -79,6 +81,8 @@ def send_message(queue, message):
     channel.basic_publish(exchange='',
                           routing_key=queue,
                           body=json.dumps(message))
+    print('message sent')
+                          
     connection.close()
 
 

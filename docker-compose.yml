@@ -16,7 +16,7 @@ services:
       - redis
   rabbitmq:
     container_name: rabbitmq
-    image: rabbitmq:3.8
+    image: rabbitmq:3.8-management
     network_mode: host
     command:
       - rabbitmq-server

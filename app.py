@@ -11,4 +11,4 @@ def health_check():
 
 if __name__ == "__main__":
     event_processor.init_event_consuming()
-    app.run(port=int(os.getenv('PORT')))
+    app.run()

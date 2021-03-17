@@ -14,7 +14,7 @@ def client(app):
     return app.test_client()
 
 
-def test_index(app, client):
+def test_health_check(app, client):
     res = client.get('/')
     assert res.status_code == 200
     expected = {'status': 'ok'}

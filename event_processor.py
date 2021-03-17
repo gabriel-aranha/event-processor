@@ -21,7 +21,6 @@ def init_event_consuming():
 
 
 def message_handler(ch, method, properties, body):
-    print('received message')
     validate_message(body)
 
 
@@ -38,7 +37,8 @@ def validate_message(message):
     if 'error' in base_result:
         if message_id != '':
             save_key_to_redis(message_id, json_message)
-            send_message('validation-error', {'id': message_id,'error': base_result['error']})
+            send_message('validation-error',
+                         {'id': message_id, 'error': base_result['error']})
         else:
             return
 
@@ -56,7 +56,8 @@ def validate_message(message):
 
     if 'error' in payload_result:
         save_key_to_redis(message_id, json_message)
-        send_message('validation-error', {'id': message_id,'error': payload_result['error']})
+        send_message('validation-error',
+                     {'id': message_id, 'error': payload_result['error']})
 
     else:
         save_key_to_redis(message_id, json_message)
@@ -70,7 +71,6 @@ def save_key_to_redis(key, payload):
 
 
 def send_message(queue, message):
-    print('init send message')
     url = os.getenv('RABBITMQ_CONN')
     params = pika.URLParameters(url)
     connection = pika.BlockingConnection(params)
@@ -81,8 +81,7 @@ def send_message(queue, message):
     channel.basic_publish(exchange='',
                           routing_key=queue,
                           body=json.dumps(message))
-    print('message sent')
-                          
+
     connection.close()
 
 

@@ -7,10 +7,9 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def health_check():
+    event_processor.init_event_consuming()
     return {'status': 'ok'}, 200
 
 
 if __name__ == "__main__":
-    time.sleep(10)
-    event_processor.init_event_consuming()
     app.run(port=int(os.getenv('PORT')))

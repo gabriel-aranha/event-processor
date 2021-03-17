@@ -7,6 +7,10 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def health_check():
+    return {'status': 'ok'}, 200
+
+@app.route('/activate', methods=['GET'])
+def activate_processor():
     event_processor.init_event_consuming()
     return {'status': 'ok'}, 200
 

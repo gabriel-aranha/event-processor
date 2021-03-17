@@ -1,3 +1,4 @@
+[![Build](https://github.com/gabriel-aranha/event-processor/actions/workflows/python-app.yml/badge.svg)](https://github.com/gabriel-aranha/event-processor/actions/workflows/python-app.yml)
 # RabbitMQ Event Processor
 Project written in Python to consume RabbitMQ messages, validate them, and persist in a Redis instance.
 # Overview

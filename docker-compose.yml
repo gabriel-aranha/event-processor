@@ -8,12 +8,15 @@ services:
       - RABBITMQ_CONN=amqp://guest:guest@localhost:5672/
       - REDIS_HOST=0.0.0.0
       - REDIS_PORT=6379
+      - MONGO_HOST=mongodb://localhost:27017/
+      - MONGO_USER=mongo
+      - MONGO_PASS=password1234
     network_mode: host
     ports:
       - 5000:5000
     depends_on:
       - rabbitmq
-      - redis
+      - mongo
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3.8-management
@@ -23,13 +26,12 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-  redis:
-    container_name: redis
-    image: redis:6.0
+  mongo:
+    container_name: mongo
+    image: mongo:latest
     network_mode: host
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    command:
-      - redis-server
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=password1234
     ports:
-      - 6379:6379
+      - 27017:27017

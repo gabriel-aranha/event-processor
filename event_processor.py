@@ -1,6 +1,6 @@
 from jsonschema import validate, ValidationError, SchemaError
 import json_schema
-import redis
+import pymongo
 import pika
 import json
 import os
@@ -36,7 +36,7 @@ def validate_message(message):
 
     if 'error' in base_result:
         if message_id != '':
-            save_key_to_redis(message_id, json_message)
+            save_key_to_mongo(message_id, json_message)
             send_message('validation-error',
                          {'id': message_id, 'error': base_result['error']})
             return
@@ -56,19 +56,22 @@ def validate_message(message):
         json_message['payload'], payload_validation_schema)
 
     if 'error' in payload_result:
-        save_key_to_redis(message_id, json_message)
+        save_key_to_mongo(message_id, json_message)
         send_message('validation-error',
                      {'id': message_id, 'error': payload_result['error']})
 
     else:
-        save_key_to_redis(message_id, json_message)
+        save_key_to_mongo(message_id, json_message)
         send_message('validation-success', {'id': message_id})
 
 
-def save_key_to_redis(key, payload):
-    r = redis.Redis(host=os.getenv('REDIS_HOST'), port=os.getenv(
-        'REDIS_PORT'), password=os.getenv('REDIS_PASS'))
-    r.set(key, json.dumps(payload))
+def save_key_to_mongo(key, payload):
+    client = pymongo.MongoClient(os.getenv('MONGO_HOST'), username=os.getenv(
+        'MONGO_USER'), password=os.getenv('MONGO_PASS'))
+    events_db = client['events']
+    messages_collection = events_db['messages']
+
+    events_db.messages_collection.insert_one({'_id': key, 'message': payload})
 
 
 def send_message(queue, message):

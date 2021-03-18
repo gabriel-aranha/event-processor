@@ -27,7 +27,6 @@ Project written in Python to consume RabbitMQ messages, validate them, and persi
     Username: guest
     Password: guest
     ```  
-<<<<<<< HEAD
     4.2 MongoDB can be accessed on the following address and credentials:
     ```
     http://localhost:27017
@@ -35,6 +34,3 @@ Project written in Python to consume RabbitMQ messages, validate them, and persi
     Username: mongo
     Password: password1234
     ```
-=======
-    4.2 Redis can be accessed on Port 6379.
->>>>>>> a6addd730491bd3144da4f5b842feda3544f279a
